@@ -62,14 +62,46 @@ en:
       online: "Online"
       place: "Manage Place"
       city: "Manage List City"
-      hotel: "Manage List Hotel"
-      playground: "Manage List Playground"
+      travel_place: "Manage List Travel Places"
       other: "Other"
       post: "Manage User's Post"
       user: "Manage User"
       search: "Search ..."
     footer:
       copyright: "Copyright &copy; 2014-2019"
+    index:
+      login_require: "You are not logged in !"
+      admin_require: "You are not admin !"
+    cities:
+      index:
+        list_city: "Manage Place City"
+        home: "Home"
+        title: "List City"
+        action: "Action"
+        edit: "Edit"
+        delete: "Delete"
+        modal-title: "Add City"
+        close: "Close"
+        add_fails: "ADD data fails"
+        edit_fails: "Edit data fails"
+        dele_fails: "Delete data fails"
+        add_success: "ADD data ok"
+        notification: "Notification"
+        question: "Are you sure ?"
+        note: "Click ok to delete"
+        notice_true: "You deleted"
+        notice_fails: "You not delete"
+    travel_places:
+      index:
+        list_travel: "Manage Place Travel"
+        home: "Home"
+        title: "List Travel"
+        name: "Name"
+        action: "Action"
+        detail: "Detail"
+        delete: "Delete"
+        modal-title: "Add City"
+        close: "Close"
   layouts:
     header:
       travel: "Let's travel"
@@ -89,7 +121,6 @@ en:
       travel: "Let's Travel"
       free: "Free Template. All Rights Reserved."
       design: "Design by Travel team"
-
   static_pages:
     home:
       home: "Home"

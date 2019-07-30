@@ -17,6 +17,20 @@ class ApplicationController < ActionController::Base
     return if logged_in?
     store_location
     flash[:danger] = t("flash.danger.require_login_message")
+  end
+
+  def verify_admin!
+    return if current_user.admin?
+
+    flash[:danger] = t ".admin_require"
+    redirect_to root_path
+  end
+
+  def require_login
+    return if logged_in?
+
+    store_location
+    flash[:danger] = t ".login_require"
     redirect_to login_url
   end
 end

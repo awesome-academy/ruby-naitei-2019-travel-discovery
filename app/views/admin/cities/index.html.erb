@@ -1,0 +1,115 @@
+<% provide :title, t(".list_city") %>
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      <%= t ".list_city" %>
+    </h1>
+    <ol class="breadcrumb">
+      <li>
+        <%= link_to "#" do %>
+          <i class="fa fa-dashboard"></i><%= t ".home" %>
+        <% end %>
+      </li>
+      <li class="active"><%= t ".list_city" %></li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title"><%= t ".title" %></h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                  title="Collapse">
+            <i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+            <i class="fa fa-times"></i></button>
+        </div>
+      </div>
+      <div class="box-body">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addcity" id="add-data">
+          <%= t ".add" %>
+        </button>
+
+        <table id="city-table" class="table table-striped table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col"><%= t ".name" %></th>
+              <th scope="col"><%= t ".action" %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @cities.each do |city| %>
+              <tr>
+                <th scope="row"><%= city.id %></th>
+                <td><%= city.name %></td>
+                <td>
+                  <button type="button" class="btn btn-primary edit" data-toggle="modal" data-target="#editcity" id="edit-data" city-id="<%= city.id %>"><%= t ".edit" %></button>
+                  <button type="button" class="btn btn-danger delete" city-id="<%= city.id %>"><%= t ".delete" %></button>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="box-footer">
+        <%= paginate @cities, theme: 'twitter-bootstrap-3' %>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal fade" id="addcity" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><%= t ".modal-title" %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="add" action="" role="form" method="post">
+          <div class="form-group">
+            <label for=""><%= t ".name" %></label>
+            <input type="text" class="form-control" id="name" name="name" value="">
+          </div>
+
+          <div class="modal-footer">
+              <input type="submit" name="submit" id="action" value="Add" class="btn btn-info" />
+              <button type="button" class="btn btn-default" data-dismiss="modal"><%= t ".close" %></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editcity" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><%= t ".modal-title" %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="form-edit" action="" role="form" method="post">
+          <div class="form-group">
+            <label for=""><%= t ".name" %></label>
+            <input type="text" class="form-control" id="name-edit" name="name" value="">
+          </div>
+
+          <div class="modal-footer">
+              <input type="submit" name="submit" id="action" value="Edit" class="btn btn-info" />
+              <button type="button" class="btn btn-default" data-dismiss="modal"><%= t ".close" %></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

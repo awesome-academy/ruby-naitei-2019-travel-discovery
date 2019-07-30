@@ -5,7 +5,7 @@ ruby "2.5.3"
 
 gem "bcrypt"
 gem "bootsnap", ">= 1.1.0", require: false
-gem "bootstrap4-kaminari-views"
+gem "bootstrap-kaminari-views"
 gem "coffee-rails", "~> 4.2"
 gem "config"
 gem "faker"
@@ -39,15 +39,17 @@ end
 group :production do
   gem "pg", "0.20.0"
 end
-
-gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
 gem "bootstrap-sass", "3.3.7"
 gem "fastclick-rails"
 gem "font-awesome-sass", "~> 5.9.0"
+gem "i18n-js"
 gem "ionicons-rails"
 gem "jquery"
 gem "jquery-rails"
 gem "jquery-slimscroll-rails"
 gem "rails-i18n"
+gem "ransack"
 gem "rubocop", "~> 0.54.0", require: false
+gem "sweetalert-rails"
+gem "toastr-rails"
+gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]

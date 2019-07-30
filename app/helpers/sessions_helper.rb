@@ -1,6 +1,7 @@
 module SessionsHelper
   def log_in user
     session[:user_id] = user.id
+    session[:name] = user.username
   end
 
   def remember user
@@ -27,6 +28,10 @@ module SessionsHelper
 
   def logged_in?
     current_user.present?
+  end
+
+  def is_admin?
+    current_user.admin?
   end
 
   def forget user

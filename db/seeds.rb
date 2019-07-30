@@ -14,7 +14,7 @@ TypeTravelPlace.create(
   name: "Foods"
 )
 
-cities = City.order(:created_at).take(3)
+cities = City.order(:created_at).take(Faker::Number.within(1..3))
 type_travel_places = TypeTravelPlace.order(:created_at)
 cities.each do |city|
   type_travel_places.each do |type_travel_place|
@@ -130,6 +130,7 @@ posts.each do |post|
       user_id: user.id,
       post_id: post.id
   end
+
 end
 
 users = User.all
