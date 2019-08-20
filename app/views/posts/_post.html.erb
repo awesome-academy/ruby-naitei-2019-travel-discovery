@@ -1,15 +1,15 @@
 <div class="card post-card" id="post-<%= post.id %>">
   <li>
-  <%= link_to gravatar_for(post.user, size: Settings.user.gravatar_post_size), post.user %>
-  <span class="user"><%= link_to post.user.username, post.user %></span>
-
-  <span class="timestamp">
-    <%= t("label.posted") %> <%= I18n.t(:time_ago,time: time_ago_in_words(post.created_at) )%>.
-    <% if current_user == post.user %>
-    <%= link_to t("button.delete"), post, method: :delete,
-                                     data: { confirm: t("dialog.delete_post_confirm"),remote: true } %>
-    <% end %>
-  </span>
+    <%= link_to gravatar_for(post.user, size: Settings.user.gravatar_post_size), post.user %>
+    <span class="user"><%= link_to post.user.username, post.user %></span>
+  </li>
+    <span class="timestamp">
+      <%= t("label.posted") %> <%= I18n.t(:time_ago,time: time_ago_in_words(post.created_at) )%>.
+      <% if current_user == post.user %>
+      <%= link_to t("button.delete"), post, method: :delete,
+                                       data: { confirm: t("dialog.delete_post_confirm"),remote: true } %>
+      <% end %>
+    </span>
     <span class="content">
 
       <div class="card address-card">
@@ -74,8 +74,12 @@
         </span>
        <% end %>
       </span>
+
+      <span class="share" data-toggle="modal" data-target="#share">
+        <img src="https://img.icons8.com/ios-glyphs/16/000000/share-3.png">
+        <%= t "label.share" %>
+      </span>
     </span>
-  </li>
 
   <div class= "card-footer">
   <%= render "shared/reaction/like_form",post_id: post.id if user_signed_in? %>
@@ -87,4 +91,19 @@
 </div>
 
 <div id="commented-users-modal-<%= post.id%>">
+</div>
+<div id="share" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><%= t "label.social-share" %></h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <%= social_share_button_tag(post.title, desc: post.title) %>
+      </div>
+    </div>
+
+  </div>
 </div>

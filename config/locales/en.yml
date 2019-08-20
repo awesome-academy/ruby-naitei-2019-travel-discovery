@@ -167,7 +167,8 @@ en:
       deleted: "but the notifiable is not found. It may have been deleted."
       commented: "commented"
       liked: "liked"
-
+    share: "Share"
+    social-share: "Social Share Network"
   flash:
     danger:
       invalid_user_infor: "You have entered an invalid username or password!"

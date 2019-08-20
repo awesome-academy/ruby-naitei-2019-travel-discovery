@@ -64,3 +64,4 @@ gem "omniauth-facebook"
 gem "rails-i18n"
 gem "ratyrate"
 gem "rubocop", "~> 0.54.0", require: false
+gem "social-share-button"

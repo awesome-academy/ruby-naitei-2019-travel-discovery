@@ -9,5 +9,6 @@
 //= require i18n.js
 //= require i18n/translations
 //= require cable
+//= require social-share-button
 //= require activestorage
 //= require turbolinks
