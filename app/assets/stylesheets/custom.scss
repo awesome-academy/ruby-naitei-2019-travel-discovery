@@ -1,7 +1,7 @@
 @import 'bootstrap/variables';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
-
+@import 'social-share-button';
 /* mixins, variables, etc. */
 $gray-medium-light: #eaeaea;
 $whisper: #e8e8e8;
@@ -403,3 +403,16 @@ ul.ui-autocomplete {
 .list-notifications-bg{
   background-color: white;
 }
+.social-share-button .ssb-icon {
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-size: 44px 46px !important;
+  display: inline-block !important;
+  height: 50px !important;
+  width: 60px !important;
+}
+.social-share-button {
+  right: 1px;
+  top: 0px;
+}
+
