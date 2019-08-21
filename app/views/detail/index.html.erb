@@ -41,49 +41,51 @@
         </div>
       </div>
       <div class="mb-5">
-        <div class="border-primary box_center mb-5">
+        <div class="border-primary box_center mb-2">
           <h2 class="text-primary text_center"><%= t ".label.rating" %></h2>
         </div>
-        <hr>
         <% if user_signed_in? %>
-          <div class= "row">
-            <%= t"label.your_rating" %>:<%= rating_for_user @places, current_user, "quality",  disable_after_rate: true, space: true %>
+          <div class= "text_center">
+            <%= rating_for_user @places, current_user, "quality",  disable_after_rate: true, space: true %>
           </div>
         <% end %>
-        <div class="row">
-          <div class="col-xs-12 col-md-6">
-            <div class="row">
-              <div class="col-xs-12 col-md-6 text-center">
-                <h1 class="rating-num">
-                  <% if @places.average("quality") %>
-                    <%= @places.average("quality").avg.round(Settings.rate_point_round) %>
-                  <% else %>
-                    0
-                  <% end %>
-                </h1>
-                <%= rating_for @places, "quality", avg: true, readonly: true, space: true %>
-                <div>
-                  <span class="fas fa-user"></span>
-                  <% total_raters = @places.rates("quality").size %>
-                  <%= I18n.t(:"label.rater", count: total_raters)%>
+        <hr>
+        <div class="box_center">
+          <div class="row">
+            <div class="">
+              <div class="row">
+                <div class="col-xs-12 col-md-4 text-center">
+                  <h1 class="rating-num">
+                    <% if @places.average("quality") %>
+                      <%= @places.average("quality").avg.round(Settings.rate_point_round) %>
+                    <% else %>
+                      0
+                    <% end %>
+                  </h1>
+                  <%= rating_for @places, "quality", avg: true, readonly: true, space: true %>
+                  <div>
+                    <span class="fas fa-user"></span>
+                    <% total_raters = @places.rates("quality").size %>
+                    <%= I18n.t(:"label.rater", count: total_raters)%>
+                  </div>
                 </div>
-              </div>
-              <div class="col-xs-12 col-md-6">
-                <div class="row rating-desc">
-                  <% 5.times do |i| %>
-                    <% num_of_raters = count_raters(@places,"quality",5-i) %>
-                    <div class="col-xs-2 col-md-2 text-right pr-0">
-                      <%= 5-i %> <i class="fas fa-star fa-xs"></i>
-                    </div>
-                    <div class="col-xs-8 col-md-8 pt-1">
-                      <div class="progress">
-                        <div class="progress-bar" style="width:<%= percent(num_of_raters, total_raters) %>%"></div>
+                <div class="col-xs-12 col-md-8">
+                  <div class="row rating-desc">
+                    <% 5.times do |i| %>
+                      <% num_of_raters = count_raters(@places,"quality",5-i) %>
+                      <div class="col-xs-2 col-md-2 text-right pr-0">
+                        <%= 5-i %> <i class="fas fa-star fa-xs"></i>
                       </div>
-                    </div>
-                    <div class= "col-xs-2 col-md-2 pl-0">
-                      <%= num_of_raters %>
-                    </div>
-                  <% end %>
+                      <div class="col-xs-8 col-md-8 pt-1">
+                        <div class="progress">
+                          <div class="progress-bar" style="width:<%= percent(num_of_raters, total_raters) %>%"></div>
+                        </div>
+                      </div>
+                      <div class= "col-xs-2 col-md-2 pl-0">
+                        <%= num_of_raters %>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>

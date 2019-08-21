@@ -178,7 +178,7 @@ aside {
 .list-like-modal{
   .modal-dialog{
     overflow-y: initial !important
-    
+
   }
   .modal-body{
     height: 400px;
@@ -430,4 +430,12 @@ text-align: left;
 .modal-picture{
   margin: auto;
   width: 400px;
+}
+
+#error_explanation{
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px;
+  }
 }

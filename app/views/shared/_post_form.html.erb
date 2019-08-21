@@ -5,12 +5,12 @@
     <div class="row">
       <div class="col-sm-4">
         <%= label_tag :City, nil, class: "text-black" %>
-        <%= text_field_tag :city_name, nil, data: { autocomplete_source: cities_path},class: "form-control"%>
+        <%= text_field_tag :city_name, nil, data: { autocomplete_source: cities_path},class: "form-control", required: true %>
         <div id = "err_city_name"></div>
       </div>
       <div class="col-sm-4">
         <%= f.label :Travel_Place, class: "text-black" %>
-        <%= f.text_field :travel_place_name, class: "form-control"%>
+        <%= f.text_field :travel_place_name, class: "form-control", required: true %>
         <%= f.hidden_field :travel_place_id, value: nil, id: "travel_place_id" %>
         <div id = "err_place_name"></div>
       </div>
@@ -18,7 +18,7 @@
 
     <div class="field">
       <%= f.label :Title, class: "text-black" %>
-      <%= f.text_field :title, class: "form-control",id: 'post_travel_place_name' %>
+      <%= f.text_field :title, class: "form-control",id: "post_travel_place_name", required: true  %>
     </div>
     <div class="field">
        <%= f.label :Content, class: "text-black" %>

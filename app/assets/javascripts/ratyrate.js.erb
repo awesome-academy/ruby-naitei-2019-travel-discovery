@@ -53,6 +53,7 @@ $(document).bind('ready turbolinks:load', function(){
 
             if ($(_this).attr('data-disable-after-rate') == 'true') {
               $(_this).raty('set', { readOnly: true, score: score });
+              window.location.reload();
             }
           }
         });
