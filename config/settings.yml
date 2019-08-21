@@ -6,6 +6,7 @@ user:
     max_email_length: 30
     min_pass_length: 6
   gravatar_size: 80
+  gravatar_big_size: 200
   gravatar_size_small: 50
   gravatar_post_size: 42
   gravatar_size_mini: 25

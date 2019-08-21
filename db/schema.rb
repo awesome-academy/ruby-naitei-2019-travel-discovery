@@ -12,10 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2019_08_16_015436) do
 
-  create_table "average_caches", force: :cascade do |t|
-    t.integer "rater_id"
+  create_table "average_caches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "rater_id"
     t.string "rateable_type"
-    t.integer "rateable_id"
+    t.bigint "rateable_id"
     t.float "avg", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -23,13 +23,13 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["rater_id"], name: "index_average_caches_on_rater_id"
   end
 
-  create_table "cities", force: :cascade do |t|
+  create_table "cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "ckeditor_assets", force: :cascade do |t|
+  create_table "ckeditor_assets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "data_file_name", null: false
     t.string "data_content_type"
     t.integer "data_file_size"
@@ -40,27 +40,27 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
-  create_table "comments", force: :cascade do |t|
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content"
-    t.integer "user_id"
-    t.integer "post_id"
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
+  create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "target_type", null: false
-    t.integer "target_id", null: false
+    t.bigint "target_id", null: false
     t.string "notifiable_type", null: false
-    t.integer "notifiable_id", null: false
+    t.bigint "notifiable_id", null: false
     t.string "key", null: false
     t.string "group_type"
-    t.integer "group_id"
+    t.bigint "group_id"
     t.integer "group_owner_id"
     t.string "notifier_type"
-    t.integer "notifier_id"
+    t.bigint "notifier_id"
     t.text "parameters"
     t.datetime "opened_at"
     t.datetime "created_at", null: false
@@ -72,29 +72,29 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["target_type", "target_id"], name: "index_notifications_on_target_type_and_target_id"
   end
 
-  create_table "overall_averages", force: :cascade do |t|
+  create_table "overall_averages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "rateable_type"
-    t.integer "rateable_id"
+    t.bigint "rateable_id"
     t.float "overall_avg", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["rateable_type", "rateable_id"], name: "index_overall_averages_on_rateable_type_and_rateable_id"
   end
 
-  create_table "post_images", force: :cascade do |t|
+  create_table "post_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "link"
-    t.integer "post_id"
+    t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_post_images_on_post_id"
   end
 
-  create_table "posts", force: :cascade do |t|
+  create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "title"
     t.text "content"
     t.integer "view"
-    t.integer "user_id"
-    t.integer "travel_place_id"
+    t.bigint "user_id"
+    t.bigint "travel_place_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["travel_place_id"], name: "index_posts_on_travel_place_id"
@@ -102,10 +102,10 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "rates", force: :cascade do |t|
-    t.integer "rater_id"
+  create_table "rates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "rater_id"
     t.string "rateable_type"
-    t.integer "rateable_id"
+    t.bigint "rateable_id"
     t.float "stars", null: false
     t.string "dimension"
     t.datetime "created_at", null: false
@@ -115,9 +115,9 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["rater_id"], name: "index_rates_on_rater_id"
   end
 
-  create_table "rating_caches", force: :cascade do |t|
+  create_table "rating_caches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "cacheable_type"
-    t.integer "cacheable_id"
+    t.bigint "cacheable_id"
     t.float "avg", null: false
     t.integer "qty", null: false
     t.string "dimension"
@@ -127,16 +127,16 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["cacheable_type", "cacheable_id"], name: "index_rating_caches_on_cacheable_type_and_cacheable_id"
   end
 
-  create_table "reaction_types", force: :cascade do |t|
+  create_table "reaction_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "reactions", force: :cascade do |t|
-    t.integer "reaction_type_id"
-    t.integer "user_id"
-    t.integer "post_id"
+  create_table "reactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reaction_type_id"
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_reactions_on_post_id"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["user_id"], name: "index_reactions_on_user_id"
   end
 
-  create_table "relationships", force: :cascade do |t|
+  create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
     t.datetime "created_at", null: false
@@ -154,9 +154,9 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
-  create_table "subscriptions", force: :cascade do |t|
+  create_table "subscriptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "target_type", null: false
-    t.integer "target_id", null: false
+    t.bigint "target_id", null: false
     t.string "key", null: false
     t.boolean "subscribing", default: true, null: false
     t.boolean "subscribing_to_email", default: true, null: false
@@ -172,34 +172,34 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["target_type", "target_id"], name: "index_subscriptions_on_target_type_and_target_id"
   end
 
-  create_table "travel_place_images", force: :cascade do |t|
+  create_table "travel_place_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "link"
-    t.integer "travel_place_id"
+    t.bigint "travel_place_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["travel_place_id"], name: "index_travel_place_images_on_travel_place_id"
   end
 
-  create_table "travel_places", force: :cascade do |t|
+  create_table "travel_places", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.text "content"
     t.string "address"
     t.float "rate_point"
-    t.integer "type_travel_place_id"
-    t.integer "city_id"
+    t.bigint "type_travel_place_id"
+    t.bigint "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_travel_places_on_city_id"
     t.index ["type_travel_place_id"], name: "index_travel_places_on_type_travel_place_id"
   end
 
-  create_table "type_travel_places", force: :cascade do |t|
+  create_table "type_travel_places", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "username"
     t.string "gender"
     t.date "date_of_birth"
@@ -219,4 +219,15 @@ ActiveRecord::Schema.define(version: 2019_08_16_015436) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
+  add_foreign_key "post_images", "posts"
+  add_foreign_key "posts", "travel_places"
+  add_foreign_key "posts", "users"
+  add_foreign_key "reactions", "posts"
+  add_foreign_key "reactions", "reaction_types"
+  add_foreign_key "reactions", "users"
+  add_foreign_key "travel_place_images", "travel_places"
+  add_foreign_key "travel_places", "cities"
+  add_foreign_key "travel_places", "type_travel_places"
 end

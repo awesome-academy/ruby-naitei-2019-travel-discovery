@@ -19,15 +19,6 @@
             <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </a>
-            <ol class="carousel-indicators">
-              <div class="row thumb">
-                <% @places.travel_place_images.each_with_index do |img, i| %>
-                  <li data-target="#carousel-thumb" class="<%= (i == 0)? 'active': '' %>" data-slide-to="<%= i%>">
-                    <%= image_tag(img.link, class: "img-thumb")%>
-                  </li>
-                <% end %>
-              </div>
-            </ol>
           </div>
           <% end %>
         </div>
@@ -38,78 +29,84 @@
 
           </div>
           <p class="mb-5 text_content "><%= truncate(@places.content, length: Settings.truncate_length.place_content) %></p>
-          <div class="mb-3 button_bottom">
-            <div class="box_center">
-              <%= link_to current_user do %>
-                <span class="btn btn-primary btn-md text-white"><%= t ".review_place" %></span>
-              <% end %>
+          <% if user_signed_in? %>
+            <div class="mb-3 button_bottom">
+                <div class="box_center">
+                  <%= link_to current_user do %>
+                    <span class="btn btn-primary btn-md text-white"><%= t ".review_place" %></span>
+                  <% end %>
+                </div>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
-
-      <hr>
-      <h2 class="mb-5 text_center text-primary">
-        <%= t ".label.rating" %>
-      </h2>
-      <% if user_signed_in? %>
-        <div class= "row">
-          <%= t"label.your_rating" %>:<%= rating_for_user @places, current_user, "quality",  disable_after_rate: true, space: true %>
+      <div class="mb-5">
+        <div class="border-primary box_center mb-5">
+          <h2 class="text-primary text_center"><%= t ".label.rating" %></h2>
         </div>
-      <% end %>
-      <div class="row">
-        <div class="col-xs-12 col-md-6">
-          <div class="row">
-            <div class="col-xs-12 col-md-6 text-center">
-              <h1 class="rating-num">
-                <% if @places.average("quality") %>
-                  <%= @places.average("quality").avg.round(Settings.rate_point_round) %>
-                <% else %>
-                  0
-                <% end %>
-              </h1>
-              <%= rating_for @places, "quality", avg: true, readonly: true, space: true %>
-              <div>
-                <span class="fas fa-user"></span>
-                <% total_raters = @places.rates("quality").size %>
-                <%= I18n.t(:"label.rater", count: total_raters)%>
+        <hr>
+        <% if user_signed_in? %>
+          <div class= "row">
+            <%= t"label.your_rating" %>:<%= rating_for_user @places, current_user, "quality",  disable_after_rate: true, space: true %>
+          </div>
+        <% end %>
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <div class="row">
+              <div class="col-xs-12 col-md-6 text-center">
+                <h1 class="rating-num">
+                  <% if @places.average("quality") %>
+                    <%= @places.average("quality").avg.round(Settings.rate_point_round) %>
+                  <% else %>
+                    0
+                  <% end %>
+                </h1>
+                <%= rating_for @places, "quality", avg: true, readonly: true, space: true %>
+                <div>
+                  <span class="fas fa-user"></span>
+                  <% total_raters = @places.rates("quality").size %>
+                  <%= I18n.t(:"label.rater", count: total_raters)%>
+                </div>
               </div>
-            </div>
-            <div class="col-xs-12 col-md-6">
-              <div class="row rating-desc">
-                <% 5.times do |i| %>
-                  <% num_of_raters = count_raters(@places,"quality",5-i) %>
-                  <div class="col-xs-2 col-md-2 text-right pr-0">
-                    <%= 5-i %> <i class="fas fa-star fa-xs"></i>
-                  </div>
-                  <div class="col-xs-8 col-md-8 pt-1">
-                    <div class="progress">
-                      <div class="progress-bar" style="width:<%= percent(num_of_raters, total_raters) %>%"></div>
+              <div class="col-xs-12 col-md-6">
+                <div class="row rating-desc">
+                  <% 5.times do |i| %>
+                    <% num_of_raters = count_raters(@places,"quality",5-i) %>
+                    <div class="col-xs-2 col-md-2 text-right pr-0">
+                      <%= 5-i %> <i class="fas fa-star fa-xs"></i>
                     </div>
-                  </div>
-                  <div class= "col-xs-2 col-md-2 pl-0">
-                     <%= num_of_raters %>
-                  </div>
-                <% end %>
+                    <div class="col-xs-8 col-md-8 pt-1">
+                      <div class="progress">
+                        <div class="progress-bar" style="width:<%= percent(num_of_raters, total_raters) %>%"></div>
+                      </div>
+                    </div>
+                    <div class= "col-xs-2 col-md-2 pl-0">
+                      <%= num_of_raters %>
+                    </div>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <hr>
       </div>
-      <hr>
-
       <% if !@posts.blank? %>
-        <h2 class="mb-5 text-primary text_center"><%= t ".place_review" %></h2>
+        <div class="border-primary box_center mb-5">
+          <h2 class="text-primary text_center"><%= t ".place_review" %></h2>
+        </div>
         <div class="border-bottom box mb-5">
           <div class="mb-5">
             <% @posts.each do |post| %>
               <div class="row post mb-3">
                 <div class="user_box pt-3">
-                  <%= link_to gravatar_for(post.user, size: Settings.user.gravatar_size), post.user %>
-                  <p class="mt-2"><%= post.user.username %></p>
+                  <%= link_to post.user do %>
+                    <%= link_to gravatar_for(post.user, size: Settings.user.gravatar_size), post.user %>
+                    <p class="mt-2"><%= post.user_username %></p>
+                  <% end %>
                   <span>
-                    <i class="far fa-thumbs-up mr-2"></i><%= post.reactions.count %>
-                    <i class="fa fa-comment m-2"></i><%= post.comments.count %>
+                    <i class="far fa-thumbs-up mr-2"></i><%= post.reactions.size %>
+                    <i class="fa fa-comment m-2"></i><%= post.comments.size %>
                   </span>
 
                 </div>
@@ -124,8 +121,9 @@
         </div>
 
       <% end %>
-
-      <h2 class="mb-5 text-primary text_center"><%= t ".more" %></h2>
+      <div class="border-primary box_center mb-5">
+        <h2 class="text-primary text_center"><%= t ".more" %></h2>
+      </div>
       <%= render "shared/listing_place" %>
   </div>
 </div>

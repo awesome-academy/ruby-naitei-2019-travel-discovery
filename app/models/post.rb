@@ -20,6 +20,7 @@ class Post < ApplicationRecord
 
   delegate :name, to: :travel_place, prefix: :travel_place, allow_nil: true
   delegate :address, to: :travel_place, prefix: :travel_place, allow_nil: true
+  delegate :username, to: :user, prefix: :user
 
   POST_PARAMS = [:title, :content, :travel_place_id,
   post_images_attributes: [:id, :post_id, :image]].freeze

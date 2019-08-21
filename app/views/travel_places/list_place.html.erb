@@ -1,5 +1,5 @@
 <% provide :title, t(".title") %>
-<% provide :header_partial, "shared/header_partial/title" %>
+<% provide :header_partial, "shared/header_partial/search" %>
 
 <div class="site-section bg-light">
     <div class="container">
@@ -24,6 +24,9 @@
                       </div>
                   </div>
                   <% end %>
+                  <div class="box_center">
+                    <%= paginate @travel_places, theme: "twitter-bootstrap-4" %>
+                  </div>
                 <% end %>
             </div>
     </div>

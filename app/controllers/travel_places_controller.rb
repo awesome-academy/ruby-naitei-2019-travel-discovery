@@ -5,6 +5,6 @@ class TravelPlacesController < ApplicationController
   end
 
   def list_place
-    @travel_places = TravelPlace.where("type_travel_place_id = #{params[:id]}")
+    @travel_places = TravelPlace.get_type(params[:id]).page(params[:page]).per Settings.num_feeds_per_page
   end
 end

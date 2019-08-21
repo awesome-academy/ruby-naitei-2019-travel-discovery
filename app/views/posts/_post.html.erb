@@ -1,7 +1,8 @@
 <div class="card post-card" id="post-<%= post.id %>">
-  <li>
-  <%= link_to gravatar_for(post.user, size: Settings.user.gravatar_post_size), post.user %>
-  <span class="user"><%= link_to post.user.username, post.user %></span>
+  <div class="p-1">
+    <%= link_to gravatar_for(post.user, size: Settings.user.gravatar_post_size), post.user %>
+    <span class="user"><%= link_to post.user.username, post.user %></span>
+  </div>
 
   <span class="timestamp">
     <%= t("label.posted") %> <%= t(:time_ago,time: time_ago_in_words(post.created_at) )%>.
@@ -10,75 +11,75 @@
                                      data: { confirm: t("dialog.delete_post_confirm"),remote: true } %>
     <% end %>
   </span>
-    <span class="content">
-
-      <div class="card address-card">
-        <%= link_to detail_index_path(name: post.travel_place_name) do %>
-            <strong><%= post.travel_place_name %></strong>
-            <span class= "address">
-              <i class = "icon icon-room"></i>
-              <%= post.travel_place_address %>
-            </span>
-        <% end %>
-        <span>
-          <%= rating_for post.travel_place, "quality", avg: true,readonly: true %>
-        </span>
-      </div>
-      <h5><%= post.title %></h5>
-      <p><%= sanitize(post.content) %></p>
-      <% if !post.post_images.empty? %>
-        <div id="imagesAlbum-<%= post.id %>" class="carousel slide " data-ride="carousel" data-interval="false">
-          <ol class="carousel-indicators">
-            <% num_of_images = post.post_images.count %>
-            <% post.post_images.each_with_index do |img, i| %>
-            <li data-target="#imagesAlbum-<%= post.id %>" data-slide-to="<%= i%>" class="<%= (i == 0)? 'active': '' %>"></li>
-            <% end %>
-          </ol>
-          <div class="carousel-inner">
-            <% num_of_images = post.post_images.count %>
-            <% post.post_images.each_with_index do |img, i| %>
-              <div class="carousel-item <%= (i == 0)? 'active': '' %>">
-                <%= image_tag img.link.url %>
-                <div class="carousel-caption">
-                  <h5><%= i+1 %>/<%= num_of_images %></h5>
-                </div>
+  <span class="content">
+    <div class="card address-card p-1">
+      <%= link_to detail_index_path(name: post.travel_place_name) do %>
+          <strong><%= post.travel_place_name %></strong>
+          <span class= "address">
+            <i class = "icon icon-room"></i>
+            <%= post.travel_place_address %>
+          </span>
+      <% end %>
+      <span>
+        <%= rating_for post.travel_place, "quality", avg: true,readonly: true %>
+      </span>
+    </div>
+    <h5><%= link_to truncate(post.title, length: Settings.truncate_length.post_title), posts_show_path(id: post.id) %></h5>
+    <p><%= sanitize(post.content) %></p>
+    <% if !post.post_images.empty? %>
+      <div id="imagesAlbum-<%= post.id %>" class="carousel slide " data-ride="carousel" data-interval="false">
+        <ol class="carousel-indicators">
+          <% num_of_images = post.post_images.count %>
+          <% post.post_images.each_with_index do |img, i| %>
+          <li data-target="#imagesAlbum-<%= post.id %>" data-slide-to="<%= i%>" class="<%= (i == 0)? 'active': '' %>"></li>
+          <% end %>
+        </ol>
+        <div class="carousel-inner">
+          <% num_of_images = post.post_images.count %>
+          <% post.post_images.each_with_index do |img, i| %>
+            <div class="carousel-item <%= (i == 0)? 'active': '' %>">
+              <%= image_tag img.link.url %>
+              <div class="carousel-caption">
+                <h5><%= i+1 %>/<%= num_of_images %></h5>
               </div>
-            <% end %>
-          </div>
-
-          <a class="carousel-control-prev" href="#imagesAlbum-<%= post.id %>" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          </a>
-          <a class="carousel-control-next" href="#imagesAlbum-<%= post.id %>" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          </a>
+            </div>
+          <% end %>
         </div>
+
+        <a class="carousel-control-prev" href="#imagesAlbum-<%= post.id %>" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#imagesAlbum-<%= post.id %>" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+      </div>
+    <% end %>
+  </span>
+
+  <span class="reaction-amount">
+    <span class= "like">
+      <%= link_to reaction_path(post.id), remote: true do %>
+      <i class="far fa-thumbs-up mr-2"></i>
+      <span id ="num_of_likes-<%= post.id %>">
+        <% num_of_likes = post.num_of_likes %>
+        <%= t(:"label.like", count: num_of_likes)%>
+      </span>
       <% end %>
     </span>
 
-    <span class="reaction-amount">
-      <span class= "like">
-        <%= link_to reaction_path(post.id), remote: true do %>
-        <span id ="num_of_likes-<%= post.id %>">
-          <% num_of_likes = post.num_of_likes %>
-          <%= t(:"label.like", count: num_of_likes)%>
-        </span>
-        <% end %>
+    <span class= "comment">
+      <%= link_to comment_path(post.id), remote: true do %>
+      <i class="fa fa-comment m-2"></i>
+      <span id="num_of_comments-<%= post.id %>">
+        <% num_of_comments = post.num_of_comments %>
+        <%= t(:"label.comment", count: num_of_comments)%>
       </span>
-
-      <span class= "comment">
-        <%= link_to comment_path(post.id), remote: true do %>
-        <span id="num_of_comments-<%= post.id %>">
-          <% num_of_comments = post.num_of_comments %>
-          <%= t(:"label.comment", count: num_of_comments)%>
-        </span>
-       <% end %>
-      </span>
+      <% end %>
     </span>
-  </li>
-
+  </span>
+  
   <div class= "card-footer">
-  <%= render "shared/reaction/like_form",post_id: post.id if user_signed_in? %>
+    <%= render "shared/reaction/like_form",post_id: post.id if user_signed_in? %>
   </div>
 
 </div>

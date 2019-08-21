@@ -1,70 +1,82 @@
-<% provide :title, truncate(@post.title, length: 30) %>
+<% provide :title, truncate(@post.title, length: Settings.truncate_length.post_title) %>
 <% provide :header_partial, "shared/header_partial/title" %>
 
 <div class="box mt-5">
-  <div class="card post-card p-3">
-    <div class="row">
-      <div class="user_box col-sm-3 ml-3">
-        <p><%= link_to gravatar_for(@post.user, size: 200), @post.user %></p>
-        <span class="user mt-2"><%= link_to @post.user.username, @post.user %></span>
-      </div>
-      <div class="col-sm-8">
-        <span class="content">
-          <div class="card address-card card-width">
-            <%= link_to detail_index_path(name: @post.travel_place_name) do %>
-              <strong><%= @post.travel_place_name %></strong>
-              <span class= "address">
-              <i class = "icon icon-room"></i>
-              <%= @post.travel_place_address %>
-            <% end %>
-          </div>
-        </span>
-        <h5><%= @post.title %></h5>
-        <p><%= sanitize(@post.content) %></p>
-        <span class="timestamp">
-          <%= t("label.posted") %> <%= t(:time_ago,time: time_ago_in_words(@post.created_at) )%>
-        </span>
-      </div>
+    <div class="card post-card p-3">
+        <div class="row">
+            <div class="col-sm-3 ml-3 text_center">
+                <p><%= link_to gravatar_for(@post.user, size: Settings.user.gravatar_big_size), @post.user %></p>
+                <h5 class="user m-2"><%= link_to @post.user.username, @post.user %></h5>                
+                <div class="reaction-amount button_bottom m-2">
+                    <span class= "like">
+                        <%= link_to reaction_path(@post.id), remote: true do %>
+                            <i class="far fa-thumbs-up mr-2"></i>
+                            <span id ="num_of_likes-<%= @post.id %>">
+                                <% num_of_likes = @post.num_of_likes %>
+                                <%= t(:"label.like", count: num_of_likes)%>
+                            </span>
+                        <% end %>
+                    </span>
+
+                    <span class= "comment">
+                        <%= link_to comment_path(@post.id), remote: true do %>
+                            <i class="fa fa-comment m-2"></i>
+                            <span id="num_of_comments-<%= @post.id %>">
+                            <% num_of_comments = @post.num_of_comments %>
+                            <%= t(:"label.comment", count: num_of_comments)%>
+                            </span>
+                        <% end %>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <span class="content m-2">
+                    <div class="card address-card card-width">
+                        <%= link_to detail_index_path(name: @post.travel_place_name) do %>
+                            <strong><%= @post.travel_place_name %></strong>
+                            <span class= "address">
+                            <i class = "icon icon-room"></i>
+                            <%= @post.travel_place_address %>
+                        <% end %>
+                    </div>
+                </span>
+                <h5><%= @post.title %></h5>
+                <p><%= sanitize(@post.content) %></p>
+                <span class="timestamp">
+                    <%= t("label.posted") %> <%= t(:time_ago,time: time_ago_in_words(@post.created_at) )%>
+                </span>
+                <div class="container m-5">
+                    <% if !@post.post_images.empty? %>
+                        <div class="carousel-inner">
+                            <% @post.post_images.each_with_index do |img, i| %>
+                                <div class="gallery"> 
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#myModal">
+                                        <%= image_tag img.link.url %>
+                                    </button>
+                                    <div class="modal fade" id="myModal" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body box_center">
+                                                    <div class="modal-picture"><%= image_tag img.link.url %></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+
+    <div class= "card-footer">
+        <%= render "shared/reaction/like_form",post_id: @post.id if user_signed_in? %>
     </div>
-      <div class="container m-5">
-        <% if !@post.post_images.empty? %>
-          <h5 class="ml-1 text-primary">Picture</h5>
-          <div class="carousel-inner">
-            <% @post.post_images.each_with_index do |img, i| %>
-              <div class="gallery">
-                  <%= image_tag img.link.url %>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-
-      <span class="reaction-amount">
-        <span class= "like">
-          <%= link_to reaction_path(@post.id), remote: true do %>
-            <i class="far fa-thumbs-up mr-2"></i>
-            <span id ="num_of_likes-<%= @post.id %>">
-              <% num_of_likes = @post.num_of_likes %>
-              <%= t(:"label.like", count: num_of_likes)%>
-            </span>
-          <% end %>
-        </span>
-
-        <span class= "comment">
-            <%= link_to comment_path(@post.id), remote: true do %>
-              <i class="fa fa-comment m-2"></i>
-              <span id="num_of_comments-<%= @post.id %>">
-              <% num_of_comments = @post.num_of_comments %>
-              <%= t(:"label.comment", count: num_of_comments)%>
-              </span>
-            <% end %>
-        </span>
-      </span>
-
-  <div class= "card-footer">
-      <%= render "shared/reaction/like_form",post_id: @post.id if user_signed_in? %>
-  </div>
-  </div>
+    </div>
 
   <div id="reaction-users-modal-<%= @post.id %>">
   </div>
